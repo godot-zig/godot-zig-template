@@ -1,0 +1,17 @@
+[configuration]
+
+compatibility_minimum = "4.2.0"
+entry_symbol = "extension_init"
+
+[libraries]
+
+macos.debug = "lib/libTemplate.dylib"
+macos.release = "lib/libTemplate.dylib"
+windows.debug.x86_64 = "lib/Template.dll"
+windows.release.x86_64 = "lib/Template.dll"
+linux.debug.x86_64 = "lib/libTemplate.linux.debug.x86_64.so"
+linux.release.x86_64 = "lib/libTemplate.linux.release.x86_64.so"
+linux.debug.arm64 = "lib/libTemplate.linux.debug.arm64.so"
+linux.release.arm64 = "lib/libTemplate.linux.release.arm64.so"
+linux.debug.rv64 = "lib/libTemplate.linux.debug.rv64.so"
+linux.release.rv64 = "lib/libTemplate.linux.release.rv64.so"
