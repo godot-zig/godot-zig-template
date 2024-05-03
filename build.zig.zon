@@ -1,0 +1,12 @@
+.{
+    .name = "godot-zig-template",
+    .version = "0.0.0",
+    .dependencies = .{
+        .godot = .{
+            // You can update this like so: zig fetch --save https://github.com/godot-zig/godot-zig/archive/<LATEST_COMMIT_HASH>.tar.gz
+            .url = "https://github.com/godot-zig/godot-zig/archive/2959af03e8028d5c2a7c101093ce8322998f5f04.tar.gz",
+            .hash = "1220e3fa847ea4ea830458a87fa6d6ca201a4e596c4818f2cf77673fdbdc51f4817f",
+        },
+    },
+    .paths = .{""},
+}
