@@ -1,19 +1,20 @@
 const std = @import("std");
 
-// Although this function looks imperative, note that its job is to
-// declaratively construct a build graph that will be executed by an external
-// runner.
 pub fn build(b: *std.Build) void {
-    // Standard target options allows the person running `zig build` to choose
-    // what target to build for. Here we do not override the defaults, which
-    // means any target is allowed, and the default is native. Other options
-    // for restricting supported target set are available.
     const target = b.standardTargetOptions(.{});
-
-    // Standard optimization options allow the person running `zig build` to select
-    // between Debug, ReleaseSafe, ReleaseFast, and ReleaseSmall. Here we do not
-    // set a preferred release mode, allowing the user to decide how to optimize.
     const optimize = b.standardOptimizeOption(.{});
+
+    const godot_path = b.option([]const u8, "godot", "Path to the Godot binary") orelse "godot";
+
+    const godot_dep = b.dependency("godot", .{
+        .target = target,
+        .optimize = optimize,
+        .godot = godot_path,
+
+        // This is the default value, so could be omitted. If you want, you can change it to "double".
+        // You should hardcode this for your project, rather than exposing it as a build option like the godot path.
+        .precision = @as([]const u8, "float"),
+    });
 
     const lib = b.addSharedLibrary(.{
         .name = "Template",
@@ -21,23 +22,12 @@ pub fn build(b: *std.Build) void {
         .target = target,
         .optimize = optimize,
     });
-
-    const api_path = "./godot-zig/src/api";
-
-    const godot_zig_build = @import("godot-zig/build.zig");
-    _ = godot_zig_build.createBindStep(b, target);
-
-    const mod = b.createModule(.{ .root_source_file = .{ .path = api_path ++ "/Godot.zig" } });
-    mod.addIncludePath(.{ .path = api_path });
-    lib.root_module.addImport("Godot", mod);
-
-    lib.addIncludePath(.{ .path = api_path });
-    lib.linkLibC();
+    lib.root_module.addImport("godot", godot_dep.module("godot"));
     b.lib_dir = "./project/godot_zig/lib";
     b.installArtifact(lib);
 
     const run_cmd = b.addSystemCommand(&.{
-        "godot", "--path", "./project",
+        godot_path, "--path", "./project",
     });
     run_cmd.step.dependOn(b.getInstallStep());
     const run_step = b.step("run", "run with Godot");
