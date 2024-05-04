@@ -1,6 +1,7 @@
 .{
     .name = "godot-zig-template",
     .version = "0.0.0",
+    .minimum_zig_version = "0.12.0",
     .dependencies = .{
         .godot = .{
             // You can update this like so: zig fetch --save https://github.com/godot-zig/godot-zig/archive/<LATEST_COMMIT_HASH>.tar.gz

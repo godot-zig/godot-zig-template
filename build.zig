@@ -7,6 +7,11 @@ pub fn build(b: *std.Build) void {
     const godot_dep = b.dependency("godot", .{
         .target = target,
         .optimize = optimize,
+        .godot = b.option([]const u8, "godot", "Path to the Godot binary") orelse "godot",
+
+        // This is the default value, so could be omitted. If you want, you can change it to "double".
+        // You should hardcode this for your project, rather than exposing it as a build option like the godot path.
+        .precision = @as([]const u8, "float"),
     });
 
     const lib = b.addSharedLibrary(.{
