@@ -1,17 +1,13 @@
 const std = @import("std");
 
-// Although this function looks imperative, note that its job is to
-// declaratively construct a build graph that will be executed by an external
-// runner.
-
 pub fn build(b: *std.Build) !void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
     const godot_path = b.option([]const u8, "godot", "Path to Godot engine binary [default: `godot`]") orelse "godot";
 
     const lib = b.addSharedLibrary(.{
-        .name = "example",
-        .root_source_file = .{ .path = "src/entry.zig" },
+        .name = "Template",
+        .root_source_file = b.path("src/entry.zig"),
         .target = target,
         .optimize = optimize,
     });
@@ -20,15 +16,16 @@ pub fn build(b: *std.Build) !void {
     const godot = godot_zig_build.createModule(b, target, optimize, godot_path);
     lib.root_module.addImport("godot", godot);
 
-    // use explicit imports to make jump work properly
-    // todo: remove this once zls get improved
+    //////////////////////////////////////////////////////////////
+    // use explicit imports to make jumps work properly in vscode
     var iter = godot.import_table.iterator();
     while (iter.next()) |it| {
         lib.root_module.addImport(it.key_ptr.*, it.value_ptr.*);
     }
-    /////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////
 
     b.lib_dir = "./project/godot_zig/lib";
+    b.exe_dir = "./project/godot_zig/lib";
     b.installArtifact(lib);
 
     const run_cmd = b.addSystemCommand(&.{
