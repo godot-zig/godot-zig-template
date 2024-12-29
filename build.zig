@@ -18,7 +18,7 @@ pub fn build(b: *std.Build) void {
 
     const lib = b.addSharedLibrary(.{
         .name = "Template",
-        .root_source_file = .{ .path = "src/ExtensionEntry.zig" },
+        .root_source_file = b.path("src/ExtensionEntry.zig"),
         .target = target,
         .optimize = optimize,
     });

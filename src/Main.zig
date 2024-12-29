@@ -1,9 +1,9 @@
 const std = @import("std");
 const Godot = @import("godot");
+
 const Self = @This();
 pub usingnamespace Godot.Node3D;
-
-godot_object: *Godot.Node3D,
+base: Godot.Node,
 
 pub fn _enter_tree(self: *Self) void {
     _ = self;
@@ -17,6 +17,6 @@ pub fn _process(self: *Self, delta: f64) void {
 
 pub fn _notification(self: *Self, what: i32) void {
     if (what == Godot.Node.NOTIFICATION_WM_CLOSE_REQUEST) {
-        self.get_tree().quit(0);
+        self.getTree().?.quit(0);
     }
 }

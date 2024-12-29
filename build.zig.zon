@@ -4,9 +4,8 @@
     .minimum_zig_version = "0.12.0",
     .dependencies = .{
         .godot = .{
-            // You can update this like so: zig fetch --save https://github.com/godot-zig/godot-zig/archive/<LATEST_COMMIT_HASH>.tar.gz
-            .url = "https://github.com/godot-zig/godot-zig/archive/2959af03e8028d5c2a7c101093ce8322998f5f04.tar.gz",
-            .hash = "1220e3fa847ea4ea830458a87fa6d6ca201a4e596c4818f2cf77673fdbdc51f4817f",
+            .url = "https://github.com/godot-zig/godot-zig/archive/11a499c0fcc59423f4de2270a47104e362f5ad7b.tar.gz",
+            .hash = "1220fe5de9018f917cdebaa77c491d78e76c4a04d04380abcd7727f0ca9c87116e0a",
         },
     },
     .paths = .{""},
